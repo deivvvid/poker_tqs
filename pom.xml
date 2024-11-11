@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ejemplo.pokerapp</groupId>
+    <artifactId>poker-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+	<properties>
+	    <maven.compiler.source>23</maven.compiler.source>
+	    <maven.compiler.target>23</maven.compiler.target>
+	</properties>
+    <dependencies>
+    <!-- JUnit para pruebas -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.8.2</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- JUnit 5 Params for parameterized tests support -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>5.8.2</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- Mockito para mock objects -->
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>4.0.0</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- Checkstyle para análisis de calidad -->
+    <dependency>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.2</version>
+    </dependency>
+    <!-- PMD para análisis de código -->
+    <dependency>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.14.0</version>
+    </dependency>
+    <!-- SpotBugs para detección de bugs -->
+    <dependency>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.2.3</version>
+    </dependency>
+</dependencies>
+</project>

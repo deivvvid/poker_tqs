@@ -10,7 +10,7 @@ public class Player {
 
     // Constructor with no initial name, hand, or coins
     public Player() {
-        this.name = "Unnamed Player";
+        this.name = "Uknown Player";
         this.hand = new Hand();
         this.coins = 0;
     }

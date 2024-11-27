@@ -12,6 +12,7 @@ public class PlayerTest {
         assertNotNull(player);
         assertEquals(0, player.getCoins());
         assertTrue(player.getHand().getCards().isEmpty());
+        assertEquals("Uknown Player", player.getName());
     }
     
     @Test

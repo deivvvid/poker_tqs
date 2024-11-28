@@ -1,22 +1,27 @@
 package com.example.pokerapp.model;
+import com.example.pokerapp.model.Card;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class Player {
 	
 	// public enum Position { DEALER, SMALLBLIND, BIGBLIND, UTG, CUTOFF }
 	 
 	private String name;
-    private Hand hand;
+	private List<Card> hand;
     private int coins;
 
     // Constructor with no initial name, hand, or coins
     public Player() {
         this.name = "Uknown Player";
-        this.hand = new Hand();
+        this.hand = new ArrayList<>();
         this.coins = 0;
+        System.out.println(hand.get(0));
     }
 
     // Constructor with name, hand, and coins
-    public Player(String name, Hand hand, int coins) {
+    public Player(String name, List<Card> hand, int coins) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty.");
         }
@@ -45,7 +50,7 @@ public class Player {
     }
 
     // Get the player's hand
-    public Hand getHand() {
+    public List<Card> getHand() {
         return hand;
     }
 
@@ -63,7 +68,7 @@ public class Player {
     }
     
     // Set the player hand (for the following hands of the game)
-    public void setHand(Hand hand) {
+    public void setHand(List<Card> hand) {
     	if (hand == null)
     	{
     		throw new IllegalArgumentException("Hand has to have cards in it. ");
@@ -88,6 +93,10 @@ public class Player {
         }
         this.coins += amount;
     }
+    
+    public void addCard(Card card) {
+        hand.add(card);
+    }
 
     // Deduct coins from the player's total
     public void makeBet(int amount) {
@@ -99,6 +108,15 @@ public class Player {
         }
         this.coins -= amount;
     }
+    
+    public void winBet(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Cannot deduct a negative amount of coins.");
+        }
+        
+        this.coins += amount;
+    }
+    
 
     @Override
     public String toString() {

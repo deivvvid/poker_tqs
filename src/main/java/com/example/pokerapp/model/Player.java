@@ -1,5 +1,5 @@
 package com.example.pokerapp.model;
-import com.example.pokerapp.model.Card;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,7 +17,6 @@ public class Player {
         this.name = "Uknown Player";
         this.hand = new ArrayList<>();
         this.coins = 0;
-        System.out.println(hand.get(0));
     }
 
     // Constructor with name, hand, and coins
@@ -69,38 +68,35 @@ public class Player {
     
     // Set the player hand (for the following hands of the game)
     public void setHand(List<Card> hand) {
-    	if (hand == null)
+    	if (hand == null || hand.size() == 0)
     	{
     		throw new IllegalArgumentException("Hand has to have cards in it. ");
     	}
     	this.hand = hand;
     }
-    
-    //Change the hand's cards because of the change of turn
-    /*
-    public void changeTurn(Hand hand) {
-    	if (hand == null)
-    	{
-    		throw new IllegalArgumentException("Hand has to have cards in it. ");
-    	}
-    }
-    */
 
     // Add coins to the player's total
     public void addCoins(int amount) {
-        if (amount < 0) {
+        if (amount <= 0) {
             throw new IllegalArgumentException("Cannot add a negative amount of coins.");
         }
         this.coins += amount;
     }
     
     public void addCard(Card card) {
+    	if (hand.size() > 1) {
+            throw new IllegalArgumentException("Cannot add a card because the hand is full.");
+        }
+    	
+    	if (card == null) {
+            throw new IllegalArgumentException("Cannot add a null card.");
+    	}
         hand.add(card);
     }
 
     // Deduct coins from the player's total
     public void makeBet(int amount) {
-        if (amount < 0) {
+        if (amount <= 0) {
             throw new IllegalArgumentException("Cannot deduct a negative amount of coins.");
         }
         if (amount > coins) {
@@ -108,15 +104,7 @@ public class Player {
         }
         this.coins -= amount;
     }
-    
-    public void winBet(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Cannot deduct a negative amount of coins.");
-        }
-        
-        this.coins += amount;
-    }
-    
+
 
     @Override
     public String toString() {

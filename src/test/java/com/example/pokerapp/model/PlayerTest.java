@@ -32,6 +32,7 @@ public class PlayerTest {
         assertEquals(100, player.getCoins());
         assertEquals(2, player.getHand().size());
         assertTrue(player.getHand().contains(new Card(Card.Suit.HEARTS, Card.Rank.A)));
+        assertTrue(player.getHand().contains(new Card(Card.Suit.DIAMONDS, Card.Rank.K)));
     }
 
     @Test
@@ -106,7 +107,6 @@ public class PlayerTest {
         assertTrue(player.getHand().contains(new Card(Card.Suit.CLUBS, Card.Rank.Q)));
         assertTrue(player.getHand().contains(new Card(Card.Suit.SPADES, Card.Rank.J)));
     }
-
 
     @Test
     public void testSetHand_nullOrEmptyValue_throwsException() {

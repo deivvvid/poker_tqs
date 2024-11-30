@@ -1,6 +1,7 @@
 package com.example.pokerapp.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -9,31 +10,32 @@ public class Deck {
     
     public Deck() {
     		this.cards = new ArrayList<>();
-    		addAllCardsToDeck();
+    		initializeDeck();
     }
     
-    public void addCard(Card card) {
-        cards.add(card);
+    private void initializeDeck() {
+        cards.clear();
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (Card.Rank rank : Card.Rank.values()) {
+                cards.add(new Card(suit, rank));
+            }
+        }
     }
     
-    public void removeCard(Card card) {
-    	cards.remove(card);
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card dealCard() {
+        return cards.remove(0);
     }
     
-    public void addAllCardsToDeck() {
-    	for (int i = 0; i < Card.Suit.values().length; i++) {
-			for (int j = 0; j < Card.Rank.values().length; j++) {
-    			this.cards.add(new Card(Card.Suit.values()[i], (Card.Rank.values()[j])));
-    		}
-		}
-    }
-    
-    public void clearCards() {
-    	cards.clear();
+    public void resetDeck() {
+        initializeDeck();
+        shuffle();
     }
     
     public List<Card> getCards() {
-    	return new ArrayList<>(cards);
+        return cards;
     }
-
 }

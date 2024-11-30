@@ -2,7 +2,10 @@ package com.example.pokerapp.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,10 +14,15 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 public class DeckTest {
 	
-	@Test
-    public void testFullDeckConstructorCreates52Cards() {
-        Deck deck = new Deck();
+	private Deck deck;
 
+    @BeforeEach
+    void setUp() {
+        deck = new Deck();
+    }
+	
+	@Test
+    public void testConstructor() {
         List<Card> cards = deck.getCards();
         assertEquals(52, cards.size(), "Full deck should contain exactly 52 cards.");
 
@@ -29,62 +37,32 @@ public class DeckTest {
     }
 	
 	@Test
-	public void testClearCardsCorrectly() {
-		Deck deck = new Deck();
-		deck.clearCards();
-		assertEquals(0, deck.getCards().size(), "Should be size 0 because list is cleared.");
-	}
-	
-	@Test
-	public void testAddsAllCardsCorrectly() {
-		Deck deck = new Deck();
-		deck.addAllCardsToDeck();
-		assertEquals(104, deck.getCards().size(), "Should be size 104 because we added 2 all cards two times, in constructor"
-				+ "and in addAllCardsToDeck() method.");
-	}
-	
-	@Test
-	public void testAddsCardCorrectly() {
-		Deck deck = new Deck();
-		deck.clearCards();
-		Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
-		deck.addCard(card);
-		assertTrue(deck.getCards().contains(card), "Deck card list should contain the card.");
-	}
-	
-	@Test
-	public void testRemoveCardCorrectly() {
-		Deck deck = new Deck();
-		Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
-		deck.removeCard(card);
-		assertFalse(deck.getCards().contains(card), "Deck card list should NOT contain the card.");
-	}
-	
-	@Test
-    public void testGetCardsReturnsCopyOfList() {
-        Deck deck = new Deck();
-
-        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
-        deck.addCard(card);
-
-        List<Card> returnedCards = deck.getCards();
-
-        assertEquals(53, deck.getCards().size(), "Original deck list should remain unchanged.");
+    void testShuffle() {
+        List<Card> originalOrder = new ArrayList<>(deck.getCards());
+        deck.shuffle();
+        assertEquals(originalOrder.size(), deck.getCards().size(), "El tamaño del mazo no debe cambiar al barajar.");
+        assertNotEquals(originalOrder, deck.getCards(), "El orden de las cartas debería ser diferente tras barajar.");
     }
-
-    @Test
-    public void testGetCardsReturnsCorrectSnapshot() {
-        Deck deck = new Deck();
-        deck.clearCards();
-
-        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
-        deck.addCard(card);
-        List<Card> snapshot = deck.getCards();
-
-        Card anotherCard = new Card(Card.Suit.DIAMONDS, Card.Rank.K);
-        deck.addCard(anotherCard);
-
-        assertEquals(1, snapshot.size(), "Snapshot should not reflect changes after its creation.");
-        assertFalse(snapshot.contains(anotherCard), "Snapshot should not contain newly added cards.");
+	
+	@Test
+    void testDealCard() {
+        int initialSize = deck.getCards().size();
+        Card dealtCard = deck.dealCard();
+        assertEquals(initialSize - 1, deck.getCards().size(), "El tamaño del mazo debe disminuir en 1 tras repartir una carta.");
+        assertFalse(deck.getCards().contains(dealtCard), "La carta repartida no debería estar en el mazo.");
     }
+	
+	@Test
+    void testResetDeck() {
+        while (!deck.getCards().isEmpty()) {
+            deck.dealCard();
+        }
+        assertTrue(deck.getCards().isEmpty(), "El mazo debería estar vacío antes de resetear.");
+        deck.resetDeck();
+        assertEquals(52, deck.getCards().size(), "El mazo debe contener 52 cartas tras resetear.");
+        Set<Card> uniqueCards = new HashSet<>(deck.getCards());
+        assertEquals(52, uniqueCards.size(), "El mazo debe tener 52 cartas únicas tras resetear.");
+    }
+	
+	
 }

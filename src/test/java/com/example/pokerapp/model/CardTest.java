@@ -8,19 +8,13 @@ import org.junit.jupiter.params.provider.EnumSource;
 public class CardTest {
 
 	@Test
-	public void testConstructor_validValues_noExceptionThrown() {
-	    Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
-	    assertNotNull(card);
-	    assertEquals(Card.Suit.HEARTS, card.getSuit());
-	    assertEquals(Card.Rank.A, card.getRank());
-	}
-	
-	@Test
-	public void testConstructor_nullRank_throwsException() {
-	    assertThrows(IllegalArgumentException.class, () -> {
-	        new Card(Card.Suit.HEARTS, null);
-	    });
-	}
+    void constructor_ShouldCreateCard_WhenSuitAndRankAreValid() {
+        Card.Suit suit = Card.Suit.HEARTS;
+        Card.Rank rank = Card.Rank.A;
+        Card card = new Card(suit, rank);
+        assertEquals(suit, card.getSuit());
+        assertEquals(rank, card.getRank());
+    }
     
     @Test
     public void testConstructor_nullValues_throwsException() {
@@ -37,6 +31,41 @@ public class CardTest {
         
         assertNotNull(minCard);
         assertNotNull(maxCard);
+    }
+    
+    @ParameterizedTest
+    @EnumSource(Card.Rank.class)
+    public void testBoundaryValuesWithRanks(Card.Rank rank) {
+        Card minCard = new Card(Card.Suit.HEARTS, rank);
+        Card maxCard = new Card(Card.Suit.SPADES, rank);
+        
+        assertNotNull(minCard);
+        assertNotNull(maxCard);
+    }
+    
+    @Test
+    void getSuit_ShouldReturnCorrectSuit() {
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        Card.Suit suit = card.getSuit();
+        assertEquals(Card.Suit.HEARTS, suit, "getSuit() should return the correct suit");
+    }
+
+    @Test
+    void getRank_ShouldReturnCorrectRank() {
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        Card.Rank rank = card.getRank();
+        assertEquals(Card.Rank.A, rank, "getRank() should return the correct rank");
+    }
+
+    @Test
+    void getSuitAndRank_ShouldWorkWithAllValidCombinations() {
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (Card.Rank rank : Card.Rank.values()) {
+                Card card = new Card(suit, rank);
+                assertEquals(suit, card.getSuit(), "getSuit() should return the correct suit");
+                assertEquals(rank, card.getRank(), "getRank() should return the correct rank");
+            }
+        }
     }
     
     @Test

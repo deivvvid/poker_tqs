@@ -21,7 +21,10 @@ import javafx.scene.control.Button;
 
 import java.util.List;
 
-public class MainView extends Application implements IMainView {
+import com.example.pokerapp.controller.MainController;
+import com.example.pokerapp.model.Card;
+
+public class MainView implements IMainView {
 	
 	/*
 	 * 
@@ -42,8 +45,16 @@ public class MainView extends Application implements IMainView {
     public Label anteBet;
     public Label callBet;
     public StackPane stackPane;
+    private MainController mc;
+    private Stage primaryStage;
+    private int chipValue[] = {1, 5, 10, 25, 50};
+    private Label placedCoins;
+    
+    public MainView(Stage primaryStage) {
+    	this.primaryStage = primaryStage;
+    }
 
-    public void createViewElements(Stage primaryStage) {
+    public void createViewElements() {
         BackgroundImage myBI = new BackgroundImage(
             new Image(getClass().getResource("/background.jpg").toExternalForm()),
             BackgroundRepeat.NO_REPEAT,
@@ -101,6 +112,7 @@ public class MainView extends Application implements IMainView {
 
             coinImage.setOnMouseClicked(event -> {
                 System.out.println("Coin clicked: " + coinIndex);
+                mc.placeCoin(chipValue[coinIndex]);
             });
 
             coinVBox.getChildren().add(coinImage);
@@ -117,17 +129,16 @@ public class MainView extends Application implements IMainView {
         Button removeCoinsButton = new Button("REMOVE COINS");
         removeCoinsButton.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-background-color: #ff0000;");
         removeCoinsButton.setOnAction(e -> {
-            // Action for removing coins
-            System.out.println("Removing coins...");
-            // Logic for removing coins
+        	System.out.println("Removing placed coins!");
+            mc.removePlacedCoins();
         });
         
-        Label placedCoinsLabel = new Label("PLACED COINS: 0");
-        placedCoinsLabel.setStyle("-fx-font-size: 36px; -fx-text-fill: white;");
-        StackPane.setAlignment(placedCoinsLabel, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(placedCoinsLabel, new javafx.geometry.Insets(0, 0, 100, 0));
+        placedCoins = new Label("PLACED COINS: 0");
+        placedCoins.setStyle("-fx-font-size: 36px; -fx-text-fill: white;");
+        StackPane.setAlignment(placedCoins, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(placedCoins, new javafx.geometry.Insets(0, 0, 100, 0));
 
-        VBox buttonBox = new VBox(placedCoinsLabel, removeCoinsButton, makeBetButton);
+        VBox buttonBox = new VBox(placedCoins, removeCoinsButton, makeBetButton);
         buttonBox.setAlignment(Pos.BOTTOM_CENTER);
         StackPane.setAlignment(buttonBox, Pos.BOTTOM_CENTER);
         StackPane.setMargin(buttonBox, new javafx.geometry.Insets(0, 0, 20, 0));
@@ -138,6 +149,8 @@ public class MainView extends Application implements IMainView {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Casino Hold'em");
         primaryStage.show();
+        List<ImageView> a = List.of(createImageView(new Image(getClass().getResource("/reverse.png").toString())));
+        populateTopHBox(a);
     }
 
     public void populateTopHBox(List<ImageView> imageViews) {
@@ -173,25 +186,24 @@ public class MainView extends Application implements IMainView {
         });
         return imageView;
     }
-
-    @Override
-    public void start(Stage primaryStage) {
-    	createViewElements(primaryStage);
-    }
-    
-    public void startNewStage() {
-    	createViewElements(new Stage());
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
     
     public void setPlayerCoins(String s) {
     	playerCoins.setText(s);
     }
     
+    public void setPlacedCoins(String s) {
+    	placedCoins.setText(s);
+    }
+    
+    public String getPlacedCoins() {
+    	return placedCoins.getText();
+    }
+    
     public String getPlayerCoins() {
     	return playerCoins.getText();
+    }
+    
+    public void setMainController(MainController mc) {
+    	this.mc = mc;
     }
 }

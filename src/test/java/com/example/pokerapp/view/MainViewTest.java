@@ -7,12 +7,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import org.testfx.framework.junit5.ApplicationTest;
+import javafx.scene.control.Label;
 
 public class MainViewTest extends ApplicationTest {
 
@@ -46,6 +46,24 @@ public class MainViewTest extends ApplicationTest {
     void testGetVBox() {
         VBox vBox = mainView.vBox;
         assertNotNull(vBox, "VBox should not be null");
+    }
+    
+    @Test
+    void testGetPlayerCoins() {
+    	String playerCoins = mainView.getPlayerCoins();
+        assertNotNull(playerCoins, "playerCoins should not be null");
+    }
+    
+    @Test
+    void testGetAnteBet() {
+    	Label anteBet = mainView.anteBet;
+        assertNotNull(anteBet, "anteBet should not be null");
+    }
+    
+    @Test
+    void testGetCallBet() {
+    	Label callBet = mainView.callBet;
+        assertNotNull(callBet, "callBet should not be null");
     }
 
     @Test
@@ -138,16 +156,23 @@ public class MainViewTest extends ApplicationTest {
 
     @Test
     public void testCreateViewElements() {
+    	assertNotNull(mainView.stackPane, "VBox should be initialized");
         assertNotNull(mainView.vBox, "VBox should be initialized");
         assertNotNull(mainView.topHBox, "Top HBox should be initialized");
         assertNotNull(mainView.middleHBox, "Middle HBox should be initialized");
         assertNotNull(mainView.bottomHBox, "Bottom HBox should be initialized");
+        assertNotNull(mainView.getPlayerCoins(), "PlayerCoins should not be null");
+        assertNotNull(mainView.anteBet, "Bottom HBox should be initialized");
+        assertNotNull(mainView.callBet, "Bottom HBox should be initialized");
     }
 
     @Test
     public void testAlignmentAndMargins() {
+        assertEquals(Pos.BOTTOM_LEFT, mainView.anteBet.getAlignment(), "anteBet should have BOTTOM_LEFT alignment");
+        assertEquals(Pos.BOTTOM_LEFT, mainView.callBet.getAlignment(), "callBet should have BOTTOM_LEFT alignment");
         assertEquals(Pos.CENTER, mainView.vBox.getAlignment(), "VBox should have CENTER alignment");
         assertEquals(50.0, mainView.vBox.getMargin(mainView.topHBox).getTop(), "Top margin should be 50px");
         assertEquals(50.0, mainView.vBox.getMargin(mainView.bottomHBox).getBottom(), "Bottom margin should be 50px");
+        assertEquals(100.0, mainView.stackPane.getMargin(mainView.callBet).getBottom(), "Bottom margin should be 100px");
     }
 }

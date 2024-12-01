@@ -15,6 +15,9 @@ public class Dealer {
         if (hand == null || hand.isEmpty()) {
             throw new IllegalArgumentException("Hand cannot be null or empty.");
         }
+        if (hand.size() > 2) {
+            throw new IllegalArgumentException("Hand cannot contain more than 2 cards.");
+        }
         this.hand = new ArrayList<>(hand);
     }
 
@@ -25,6 +28,9 @@ public class Dealer {
     public void setHand(List<Card> hand) {
         if (hand == null || hand.isEmpty()) {
             throw new IllegalArgumentException("Hand cannot be null or empty.");
+        }
+        if (hand.size() > 2) {
+            throw new IllegalArgumentException("Hand cannot contain more than 2 cards.");
         }
         this.hand = new ArrayList<>(hand);
     }

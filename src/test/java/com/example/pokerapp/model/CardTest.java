@@ -72,15 +72,35 @@ public class CardTest {
     public void testEquals_sameCards_returnsTrue() {
         Card card1 = new Card(Card.Suit.HEARTS, Card.Rank.A);
         Card card2 = new Card(Card.Suit.HEARTS, Card.Rank.A);
-        assertEquals(card1, card2);
+        assertTrue(card1.equals(card2), "The cards should be equal.");
     }
-    
+
+    @Test
+    public void testEquals_sameObject_returnsTrue() {
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        assertTrue(card.equals(card), "An object should always be equal to itself.");
+    }
+
     @Test
     public void testEquals_differentCards_returnsFalse() {
         Card card1 = new Card(Card.Suit.HEARTS, Card.Rank.A);
         Card card2 = new Card(Card.Suit.CLUBS, Card.Rank.K);
-        assertNotEquals(card1, card2);
+        assertFalse(card1.equals(card2), "Cards with different suit and rank should not be equal.");
     }
+
+    @Test
+    public void testEquals_null_returnsFalse() {
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        assertFalse(card.equals(null), "A card should not be equal to null.");
+    }
+
+    @Test
+    public void testEquals_differentClass_returnsFalse() {
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        Object obj = new Object();
+        assertFalse(card.equals(obj), "A card should not be equal to an object of a different class.");
+    }
+
     
     @Test
     public void testGetImagePath() {

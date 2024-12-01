@@ -14,7 +14,11 @@ public class Table {
     }
 
     public void addCommunityCard(Card card) {
+    	int quantity_communty_cards_before = communityCards.size();
         communityCards.add(card);
+        if (quantity_communty_cards_before >= communityCards.size()) {
+        	throw new IllegalArgumentException("Card added incorrrectly.");
+        }
     }
 
     public List<Card> getCommunityCards() {

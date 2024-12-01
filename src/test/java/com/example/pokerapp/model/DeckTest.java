@@ -37,6 +37,12 @@ public class DeckTest {
     }
 	
 	@Test
+    public void testConstructor_tooManyCards() {
+        assertDoesNotThrow(() -> deck = new Deck());
+        assertEquals(52, deck.getCards().size(), "Too many cards in teh deck.");
+    }
+	
+	@Test
     void testShuffle() {
         List<Card> originalOrder = new ArrayList<>(deck.getCards());
         deck.shuffle();

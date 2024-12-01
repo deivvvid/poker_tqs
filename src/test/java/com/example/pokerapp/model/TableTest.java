@@ -17,6 +17,16 @@ class TableTest {
         assertEquals(1, communityCards.size());
         assertEquals(card, communityCards.get(0));
     }
+    
+    @Test
+    public void testAddCommunityCard_correctlyAddsCard() {
+    	Table table = new Table();
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        int quantityBefore = table.getCommunityCards().size();
+        
+        assertDoesNotThrow(() -> table.addCommunityCard(card));
+        assertEquals(quantityBefore + 1, table.getCommunityCards().size(), "Card added incorrectly.");
+    }
 
     @Test
     void testSetAndGetAnteBet() {

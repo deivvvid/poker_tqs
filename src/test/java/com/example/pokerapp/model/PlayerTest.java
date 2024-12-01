@@ -134,6 +134,14 @@ public class PlayerTest {
     }
     
     @Test
+    public void testAddCoins_incorrectAdd_throwsException() {
+    	Player player = new Player("John", new ArrayList<>(), 10);
+        int amountToAdd = 20;
+        assertDoesNotThrow(() -> player.addCoins(amountToAdd));
+        assertTrue(player.getCoins() > 20, "Coins should be correctly added.");
+    }
+    
+    @Test
     public void testAddCard_validCard_addsCardToHand() {
         Player player = new Player();
         Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);

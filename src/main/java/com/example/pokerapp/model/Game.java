@@ -116,8 +116,10 @@ public class Game {
             return rank2.ordinal() - rank1.ordinal();
         }
 
-        List<Integer> hand1Values = hand1.stream().map(c -> c.getRank().ordinal()).sorted(Collections.reverseOrder()).collect(Collectors.toList());
-        List<Integer> hand2Values = hand2.stream().map(c -> c.getRank().ordinal()).sorted(Collections.reverseOrder()).collect(Collectors.toList());
+        List<Integer> hand1Values = hand1.stream().map(
+        		c -> c.getRank().ordinal()).sorted(Collections.reverseOrder()).collect(Collectors.toList());
+        List<Integer> hand2Values = hand2.stream().map(
+        		c -> c.getRank().ordinal()).sorted(Collections.reverseOrder()).collect(Collectors.toList());
 
         for (int i = 0; i < hand1Values.size(); i++) {
             int comparison = hand1Values.get(i) - hand2Values.get(i);
@@ -148,7 +150,8 @@ public class Game {
         return bestHand;
     }
 
-    private static void generateCombinations(List<Card> cards, int size, int start, List<Card> current, List<List<Card>> allCombinations) {
+    private static void generateCombinations(List<Card> cards, int size, int start, 
+    		List<Card> current, List<List<Card>> allCombinations) {
         if (current.size() == size) {
             allCombinations.add(new ArrayList<>(current));
             return;

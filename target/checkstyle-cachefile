@@ -1,9 +1,12 @@
-#Sun Dec 01 21:37:08 CET 2024
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Card.java=1733081640592
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Dealer.java=1733079595355
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Deck.java=1733073542314
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Game.java=1733069013300
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Player.java=1733079588830
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Table.java=1733075003397
-C\:\\Users\\Jan\\Documents\\4t\ curs\\1r\ semestre\\TQS\\Practiques\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\view\\MainView.java=1733069013301
-configuration*?=A5555C1DAB1D21D75D0FDF16CC69C1411325FA7
+#Sun Dec 01 14:32:57 PST 2024
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\AppLauncher.java=1733091828603
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\controller\\MainController.java=1733092178106
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Card.java=1733091723465
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Dealer.java=1733091723465
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Deck.java=1733091723466
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Game.java=1733092232126
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Player.java=1733091723467
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\model\\Table.java=1733091723468
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\view\\IMainView.java=1733091828605
+D\:\\Sistem\\Users\\deivvvid\\eclipse-workspace\\poker_tqs\\src\\main\\java\\com\\example\\pokerapp\\view\\MainView.java=1733091828605
+configuration*?=12DE05875FE31A35523EC22D35034776E428F86

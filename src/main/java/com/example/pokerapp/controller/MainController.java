@@ -109,7 +109,8 @@ public class MainController {
 		System.out.println(Game.compareHands(bestHand, minHand));
 		System.out.println(Game.compareHands(selectedCards, bestHand));
 		if (Game.compareHands(bestHand, minHand) < 0 || Game.compareHands(selectedCards, bestHand) > 0) {
-			game.getPlayer().addCoins(game.getTable().getAnteBet() * Game.payRatio(Game.classifyHand(selectedCards)));
+			game.getPlayer().addCoins(game.getTable().getAnteBet() * 
+					Game.payRatio(Game.classifyHand(selectedCards)));
 			game.getPlayer().addCoins(game.getTable().getCallBet());
 			System.out.println("Player Wins");
 		} else if (Game.compareHands(selectedCards, bestHand) == 0) {

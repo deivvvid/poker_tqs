@@ -52,7 +52,7 @@ public class MockView implements IMainView {
     	this.mc = mc;
     }
     
-    public int populateTopHBox(List<Image> images) {
+    public int populateDealerCardsBox(List<Image> images) {
         top.clear();
         for (Image i : images) {
             top.add(i);
@@ -60,7 +60,7 @@ public class MockView implements IMainView {
         return top.size();
     }
 
-    public int populateMiddleHBox(List<Image> images) {
+    public int populateTableCardsBox(List<Image> images) {
         mid.clear();
         for (Image i : images) {
             mid.add(i);
@@ -68,7 +68,7 @@ public class MockView implements IMainView {
         return mid.size();
     }
 
-    public int populateBottomHBox(List<Image> images) {
+    public int populatePlayerCardsBox(List<Image> images) {
         bot.clear();
         for (Image i : images) {
             bot.add(i);

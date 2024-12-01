@@ -6,23 +6,27 @@ import java.util.stream.Collectors;
 import com.example.pokerapp.model.Card.Rank;
 
 public class Game {
+	
+	// Enum que representa los diferentes tipos de combinaciones posibles en una mano de poker.
 	public enum HandRank {
-        ROYAL_FLUSH,
-        STRAIGHT_FLUSH,
-        FOUR_OF_A_KIND,
-        FULL_HOUSE,
-        FLUSH,
-        STRAIGHT,
-        THREE_OF_A_KIND,
-        TWO_PAIR,
-        ONE_PAIR,
-        HIGH_CARD
-    }
-    private Deck deck;
-    private Dealer dealer;
-    private Player player;
-    private Table table;
+	    ROYAL_FLUSH,       // Escalera Real
+	    STRAIGHT_FLUSH,    // Escalera de color
+	    FOUR_OF_A_KIND,    // Póker (cuatro iguales)
+	    FULL_HOUSE,        // Full
+	    FLUSH,             // Color
+	    STRAIGHT,          // Escalera
+	    THREE_OF_A_KIND,   // Trío
+	    TWO_PAIR,          // Doble pareja
+	    ONE_PAIR,          // Pareja
+	    HIGH_CARD          // Carta alta
+	}
+	
+	private Deck deck;       // El mazo de cartas
+	private Dealer dealer;   // El dealer (repartidor)
+	private Player player;   // El jugador
+	private Table table;     // La mesa del juego
 
+	// Constructor que inicializa el mazo, dealer, jugador y la mesa. Baraja las cartas.
     public Game(int playerChips) {
         this.deck = new Deck();
         this.dealer = new Dealer();
@@ -31,6 +35,7 @@ public class Game {
         deck.shuffle();
     }
 
+    // Comienza una ronda, repartiendo cartas y colocando las cartas comunitarias en la mesa.
     public void startRound(int ante) {
     	deck.resetDeck();
         table.setAnteBet(ante);
@@ -44,6 +49,7 @@ public class Game {
         table.addCommunityCard(deck.dealCard());
     }
 
+    // El jugador hace una apuesta de igualar la apuesta anterior (llamar).
     public void playerCalls() {
     	if (table.getAnteBet() != 0) {
 	        int callBet = table.getAnteBet() * 2;
@@ -54,6 +60,7 @@ public class Game {
     	}
     }
     
+	 // Clasifica la mano recibida, evaluando las combinaciones posibles de cartas
     public static HandRank classifyHand(List<Card> hand) {
         hand.sort(Comparator.comparingInt(c -> c.getRank().ordinal()));
         Map<Card.Rank, Long> rankCounts = hand.stream()
@@ -77,12 +84,15 @@ public class Game {
         return HandRank.HIGH_CARD;
     }
 
+    // Verifica si las cartas forman una secuencia consecutiva, tomando en cuenta el caso del As
     public static boolean isConsecutive(List<Integer> ranks) {
+    	
+    	// Ordena las cartas por su valor numérico
         ranks.sort(Integer::compareTo);
 
         Boolean aux = true;
         for (int i = 0; i < ranks.size() - 1; i++) {
-            if (ranks.get(i) + 1 != ranks.get(i + 1)) {
+            if (ranks.get(i) + 1 != ranks.get(i + 1)) { // Verifica si las cartas son consecutivas
                 aux = false; 
                 break;
             }
@@ -91,6 +101,8 @@ public class Game {
             return true;
         }
         List<Integer> adjustedRanks = new ArrayList<>();
+        
+        // Ajusta el As si es necesario para ser considerado como 1
         for (Integer rank : ranks) {
             if (rank == 12) {
                 adjustedRanks.add(-1);
@@ -101,21 +113,26 @@ public class Game {
         adjustedRanks.sort(Integer::compareTo);
 
         for (int i = 0; i < adjustedRanks.size() - 1; i++) {
-            if (adjustedRanks.get(i) + 1 != adjustedRanks.get(i + 1)) {
+            if (adjustedRanks.get(i) + 1 != adjustedRanks.get(i + 1)) { // Verifica si las cartas son consecutivas
                 return false;
             }
         }
         return true;
     }
 
+    // Compara dos manos y devuelve un valor indicando cuál es mejor (usando las clasificaciones)
     public static int compareHands(List<Card> hand1, List<Card> hand2) {
+    	
+    	// Clasifica cada mano
         HandRank rank1 = classifyHand(hand1);
         HandRank rank2 = classifyHand(hand2);
 
+        // Compara el rango de las manos, si son rangos diferentes ya retorna cual es mejor
         if (rank1 != rank2) {
             return rank2.ordinal() - rank1.ordinal();
         }
 
+        // Si no, iremos a hacer el desempate
         List<Integer> hand1Values = hand1.stream().map(
         		c -> c.getRank().ordinal()).sorted(Collections.reverseOrder()).collect(Collectors.toList());
         List<Integer> hand2Values = hand2.stream().map(
@@ -131,6 +148,7 @@ public class Game {
         return 0;
     }
     
+    // Determina la mejor mano de 5 cartas entre todas las combinaciones posibles de cartas
     public static List<Card> bestHand(List<Card> cards) {
         List<List<Card>> allCombinations = new ArrayList<>();
         generateCombinations(cards, 5, 0, new ArrayList<>(), allCombinations);
@@ -147,10 +165,12 @@ public class Game {
             }
         }
 
+        // Devuelve la mejor mano encontrada
         return bestHand;
     }
 
-    private static void generateCombinations(List<Card> cards, int size, int start, 
+    // Genera todas las combinaciones posibles de cartas de un tamaño específico (5 cartas)
+    public static void generateCombinations(List<Card> cards, int size, int start, 
     		List<Card> current, List<List<Card>> allCombinations) {
         if (current.size() == size) {
             allCombinations.add(new ArrayList<>(current));
@@ -164,6 +184,7 @@ public class Game {
         }
     }
 
+    // Retorna la relación de pago asociada con el tipo de mano
     public static int payRatio(HandRank hr) {
     	switch(hr) {
     	case ROYAL_FLUSH:
@@ -191,6 +212,7 @@ public class Game {
     	}
     }
     
+    // Métodos getter para acceder a las propiedades del mazo, dealer, jugador y mesa.
     public Deck getDeck() {
         return deck;
     }

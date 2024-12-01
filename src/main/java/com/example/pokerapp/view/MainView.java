@@ -44,7 +44,7 @@ public class MainView implements IMainView {
     public double cardHeight;
     private Label playerCoins;
     private Label anteBet;
-    public Label callBet;
+    private Label callBet;
     public StackPane stackPane;
     private MainController mc;
     private Stage primaryStage;
@@ -124,10 +124,17 @@ public class MainView implements IMainView {
 
         Button makeBetButton = new Button("MAKE BET");
         makeBetButton.setPickOnBounds(true);
-        makeBetButton.setStyle("-fx-font-size: 24px; -fx-padding: 10px 20px; -fx-background-color: #000000; -fx-text-fill: white;");
+        makeBetButton.setStyle("-fx-font-size: 20px; -fx-background-color: #000000; -fx-text-fill: white;");
         makeBetButton.setOnAction(event -> {
             System.out.println("Make Bet button clicked!");
             mc.makeBet();
+        });
+        
+        Button continueButton = new Button("CONTINUE");
+        continueButton.setPickOnBounds(true);
+        continueButton.setStyle("-fx-font-size: 20px; -fx-background-color: #000000; -fx-text-fill: white;");
+        continueButton.setOnAction(event -> {
+            mc.next();
         });
         
         Button removeCoinsButton = new Button("REMOVE COINS");
@@ -138,26 +145,38 @@ public class MainView implements IMainView {
             mc.removePlacedCoins();
         });
         
+        Button retireButton = new Button("RETIRE");
+        retireButton.setPickOnBounds(true);
+        retireButton.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-background-color: #ff0000;");
+        retireButton.setOnAction(e -> {
+        	System.out.println("Trying to retire!");
+            mc.retire();
+        });
+        
         placedCoins = new Label("PLACED COINS: 0");
         placedCoins.setStyle("-fx-font-size: 36px; -fx-text-fill: white;");
         StackPane.setAlignment(placedCoins, Pos.BOTTOM_CENTER);
         StackPane.setMargin(placedCoins, new javafx.geometry.Insets(0, 0, 100, 0));
-
-        VBox buttonBox = new VBox(placedCoins, removeCoinsButton, makeBetButton);
+        
+        VBox mainBox = new VBox (20);
+        mainBox.getChildren().add(placedCoins);
+        HBox buttonBox = new HBox(20, removeCoinsButton, makeBetButton, retireButton, continueButton);
+        mainBox.getChildren().add(buttonBox);
         buttonBox.setAlignment(Pos.BOTTOM_CENTER);
         StackPane.setAlignment(buttonBox, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(buttonBox, new javafx.geometry.Insets(0, 0, 20, 0));
+        StackPane.setMargin(mainBox, new javafx.geometry.Insets(20, 20, 20, 20));
 
         //vBox.setStyle("-fx-background-color: lightblue;");
         //buttonBox.setStyle("-fx-background-color: lightcoral;");
         //coinVBox.setStyle("-fx-background-color: lightgray;");
         vBox.setMaxWidth(Region.USE_PREF_SIZE);
         vBox.setMaxHeight(Region.USE_PREF_SIZE);
-        buttonBox.setMaxWidth(Region.USE_PREF_SIZE);
-        buttonBox.setMaxHeight(Region.USE_PREF_SIZE);
+        mainBox.setMaxWidth(Region.USE_PREF_SIZE);
+        mainBox.setMaxHeight(Region.USE_PREF_SIZE);
         coinVBox.setMaxWidth(Region.USE_PREF_SIZE);
         coinVBox.setMaxHeight(Region.USE_PREF_SIZE);
-        stackPane.getChildren().addAll(vBox, playerCoins, anteBet, callBet, buttonBox, coinVBox);
+        stackPane.getChildren().addAll(vBox, playerCoins, anteBet, callBet, mainBox, coinVBox);
+        StackPane.setAlignment(mainBox, Pos.BOTTOM_CENTER);
         Scene scene = new Scene(stackPane, 1280, 720);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Casino Hold'em");
@@ -185,42 +204,53 @@ public class MainView implements IMainView {
     public int populateTopHBox(List<Image> images) {
         topHBox.getChildren().clear();
         for (Image i : images) {
-            topHBox.getChildren().add(createImageView(i));
+            topHBox.getChildren().add(createImageView(i, false, false, 0));
         }
         return topHBox.getChildren().size();
     }
 
     public int populateMiddleHBox(List<Image> images) {
         middleHBox.getChildren().clear();
+        int j = 0;
         for (Image i : images) {
-            middleHBox.getChildren().add(createImageView(i));
+            middleHBox.getChildren().add(createImageView(i, true, true, j));
+            j++;
         }
         return middleHBox.getChildren().size();
     }
 
     public int populateBottomHBox(List<Image> images) {
         bottomHBox.getChildren().clear();
+        int j = 0;
         for (Image i : images) {
-            bottomHBox.getChildren().add(createImageView(i));
+            bottomHBox.getChildren().add(createImageView(i, true, false, j));
+            j++;
         }
         return bottomHBox.getChildren().size();
     }
 
-    private ImageView createImageView(Image image) {
+    private ImageView createImageView(Image image, Boolean clickable, Boolean table,
+    		int index) {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(cardHeight);
         imageView.setPreserveRatio(true);
-        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("Nothing");
-            }
-        });
+        if (clickable) {
+	        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	            @Override
+	            public void handle(MouseEvent event) {
+	                System.out.println("Nothing");
+	                int ret = mc.pickCard(table, index);
+	                if (ret == 1) {
+	                	imageView.setOnMouseClicked(null);
+	                }
+	            }
+	        });
+        }
         return imageView;
     }
     
     public void setPlayerCoins(String s) {
-    	playerCoins.setText("COINS:" + s);
+    	playerCoins.setText("COINS: " + s);
     }
     
     public void setPlacedCoins(String s) {
@@ -245,5 +275,13 @@ public class MainView implements IMainView {
     
     public String getAnteBet() {
     	return anteBet.getText();
+    }
+    
+    public void setCallBet(String s) {
+    	callBet.setText("CALL: " + s);
+    }
+    
+    public String getCallBet() {
+    	return callBet.getText();
     }
 }

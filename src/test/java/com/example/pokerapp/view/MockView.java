@@ -16,6 +16,7 @@ public class MockView implements IMainView {
 	private List<Image> mid;
 	private List<Image> bot;
 	private String anteBet;
+	private String callBet;
 	
 	public MockView() {
 		
@@ -24,7 +25,8 @@ public class MockView implements IMainView {
 	public void createViewElements() {
 		playerCoins = "COINS: 1000";
 		placedCoins = "PLACED COINS: 0";
-		anteBet = "ANTE: 0";
+		anteBet = "ANTE: No bet";
+		anteBet = "CALL: No bet";
 		top = new ArrayList<Image>();
 		mid = new ArrayList<Image>();
 		bot = new ArrayList<Image>();
@@ -79,6 +81,14 @@ public class MockView implements IMainView {
     }
     
     public String getAnteBet() {
+    	return anteBet;
+    }
+    
+    public void setCallBet(String s) {
+    	anteBet = "ANTE: " + s;
+    }
+    
+    public String getCallBet() {
     	return anteBet;
     }
 }

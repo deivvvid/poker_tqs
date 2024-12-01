@@ -18,4 +18,6 @@ public interface IMainView {
     public int populateBottomHBox(List<Image> images);
     public void setAnteBet(String s);
     public String getAnteBet();
+    public void setCallBet(String s);
+    public String getCallBet();
 }

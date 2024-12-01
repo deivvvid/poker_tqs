@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Background;
@@ -42,7 +43,7 @@ public class MainView implements IMainView {
     public VBox vBox;
     public double cardHeight;
     private Label playerCoins;
-    public Label anteBet;
+    private Label anteBet;
     public Label callBet;
     public StackPane stackPane;
     private MainController mc;
@@ -70,7 +71,7 @@ public class MainView implements IMainView {
         middleHBox = new HBox(10);
         bottomHBox = new HBox(10);
         vBox = new VBox(10);
-        cardHeight = 200;
+        cardHeight = 150;
     	topHBox.setStyle("-fx-padding: 10; -fx-alignment: center;");
     	bottomHBox.setStyle("-fx-padding: 10; -fx-alignment: center;");
     	middleHBox.setStyle("-fx-padding: 10; -fx-alignment: center;");
@@ -80,21 +81,21 @@ public class MainView implements IMainView {
 
         vBox.setAlignment(Pos.CENTER);
         VBox.setMargin(topHBox, new javafx.geometry.Insets(50, 0, 0, 0));
-        VBox.setMargin(bottomHBox, new javafx.geometry.Insets(0, 0, 50, 0));
+        VBox.setMargin(bottomHBox, new javafx.geometry.Insets(0, 0, 230, 0));
 
         vBox.getChildren().addAll(topHBox, middleHBox, bottomHBox);
         
-        playerCoins = new Label("Coins: 1000");
+        playerCoins = new Label("COINS: 1000");
         playerCoins.setStyle("-fx-font-size: 48px; -fx-text-fill: white;");
         StackPane.setAlignment(playerCoins, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(playerCoins, new javafx.geometry.Insets(20, 20, 20, 20));
         
-        anteBet = new Label("Ante: No bet");
+        anteBet = new Label("ANTE: NO BET");
         anteBet.setStyle("-fx-font-size: 48px; -fx-text-fill: white;");
         StackPane.setAlignment(anteBet, Pos.BOTTOM_LEFT);
         StackPane.setMargin(anteBet, new javafx.geometry.Insets(20, 20, 20, 20));
         
-        callBet = new Label("Call: No bet");
+        callBet = new Label("CALL: NO BET");
         callBet.setStyle("-fx-font-size: 48px; -fx-text-fill: white;");
         StackPane.setAlignment(callBet, Pos.BOTTOM_LEFT);
         StackPane.setMargin(callBet, new javafx.geometry.Insets(20, 20, 100, 20));
@@ -109,24 +110,28 @@ public class MainView implements IMainView {
         	ImageView coinImage = new ImageView(getClass().getResource("/CHIP_" + i + ".png").toExternalForm());
             coinImage.setFitWidth(80);
             coinImage.setFitHeight(80);
-
-            coinImage.setOnMouseClicked(event -> {
-                System.out.println("Coin clicked: " + coinIndex);
-                mc.placeCoin(chipValue[coinIndex]);
+            
+            coinImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                	System.out.println("Coin clicked: " + coinIndex);
+                    mc.placeCoin(chipValue[coinIndex]);
+                }
             });
 
             coinVBox.getChildren().add(coinImage);
         }
 
-        stackPane.getChildren().addAll(vBox, playerCoins, anteBet, callBet, coinVBox);
-        
         Button makeBetButton = new Button("MAKE BET");
+        makeBetButton.setPickOnBounds(true);
         makeBetButton.setStyle("-fx-font-size: 24px; -fx-padding: 10px 20px; -fx-background-color: #000000; -fx-text-fill: white;");
         makeBetButton.setOnAction(event -> {
             System.out.println("Make Bet button clicked!");
+            mc.makeBet();
         });
         
         Button removeCoinsButton = new Button("REMOVE COINS");
+        removeCoinsButton.setPickOnBounds(true);
         removeCoinsButton.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-background-color: #ff0000;");
         removeCoinsButton.setOnAction(e -> {
         	System.out.println("Removing placed coins!");
@@ -143,38 +148,65 @@ public class MainView implements IMainView {
         StackPane.setAlignment(buttonBox, Pos.BOTTOM_CENTER);
         StackPane.setMargin(buttonBox, new javafx.geometry.Insets(0, 0, 20, 0));
 
-        stackPane.getChildren().add(buttonBox);
-
+        //vBox.setStyle("-fx-background-color: lightblue;");
+        //buttonBox.setStyle("-fx-background-color: lightcoral;");
+        //coinVBox.setStyle("-fx-background-color: lightgray;");
+        vBox.setMaxWidth(Region.USE_PREF_SIZE);
+        vBox.setMaxHeight(Region.USE_PREF_SIZE);
+        buttonBox.setMaxWidth(Region.USE_PREF_SIZE);
+        buttonBox.setMaxHeight(Region.USE_PREF_SIZE);
+        coinVBox.setMaxWidth(Region.USE_PREF_SIZE);
+        coinVBox.setMaxHeight(Region.USE_PREF_SIZE);
+        stackPane.getChildren().addAll(vBox, playerCoins, anteBet, callBet, buttonBox, coinVBox);
         Scene scene = new Scene(stackPane, 1280, 720);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Casino Hold'em");
         primaryStage.show();
-        List<ImageView> a = List.of(createImageView(new Image(getClass().getResource("/reverse.png").toString())));
-        populateTopHBox(a);
+        /*List<ImageView> a = List.of(createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())));
+        List<ImageView> b = List.of(createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())));
+        List<ImageView> c = List.of(createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())),
+        		createImageView(new Image(getClass().getResource("/reverse.png").toString())));
+        populateBottomHBox(a);
+        populateTopHBox(b);
+        populateMiddleHBox(c);*/
     }
 
-    public void populateTopHBox(List<ImageView> imageViews) {
+    public int populateTopHBox(List<Image> images) {
         topHBox.getChildren().clear();
-        for (ImageView iv : imageViews) {
-            topHBox.getChildren().add(iv);
+        for (Image i : images) {
+            topHBox.getChildren().add(createImageView(i));
         }
+        return topHBox.getChildren().size();
     }
 
-    public void populateMiddleHBox(List<ImageView> imageViews) {
+    public int populateMiddleHBox(List<Image> images) {
         middleHBox.getChildren().clear();
-        for (ImageView iv : imageViews) {
-            middleHBox.getChildren().add(iv);
+        for (Image i : images) {
+            middleHBox.getChildren().add(createImageView(i));
         }
+        return middleHBox.getChildren().size();
     }
 
-    public void populateBottomHBox(List<ImageView> imageViews) {
+    public int populateBottomHBox(List<Image> images) {
         bottomHBox.getChildren().clear();
-        for (ImageView iv : imageViews) {
-            bottomHBox.getChildren().add(iv);
+        for (Image i : images) {
+            bottomHBox.getChildren().add(createImageView(i));
         }
+        return bottomHBox.getChildren().size();
     }
 
-    public ImageView createImageView(Image image) {
+    private ImageView createImageView(Image image) {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(cardHeight);
         imageView.setPreserveRatio(true);
@@ -188,11 +220,11 @@ public class MainView implements IMainView {
     }
     
     public void setPlayerCoins(String s) {
-    	playerCoins.setText(s);
+    	playerCoins.setText("COINS:" + s);
     }
     
     public void setPlacedCoins(String s) {
-    	placedCoins.setText(s);
+    	placedCoins.setText("PLACED COINS: " + s);
     }
     
     public String getPlacedCoins() {
@@ -205,5 +237,13 @@ public class MainView implements IMainView {
     
     public void setMainController(MainController mc) {
     	this.mc = mc;
+    }
+    
+    public void setAnteBet(String s) {
+    	anteBet.setText("ANTE: " + s);
+    }
+    
+    public String getAnteBet() {
+    	return anteBet.getText();
     }
 }

@@ -32,6 +32,17 @@ public class DealerTest {
 	}
 	
 	@Test
+	public void testConstructor_withHandOversized_ExceptionThrown() {
+		List<Card> hand = Arrays.asList(
+	            new Card(Card.Suit.DIAMONDS, Card.Rank.THREE),
+	            new Card(Card.Suit.HEARTS, Card.Rank.J),
+	            new Card(Card.Suit.CLUBS, Card.Rank.K)
+	    );
+
+	    assertThrows(IllegalArgumentException.class, () -> new Dealer(hand));
+	}
+	
+	@Test
     public void testSetHand_validValue_setsHand() {
         Dealer dealer = new Dealer();
 
@@ -56,12 +67,24 @@ public class DealerTest {
     }
 
     @Test
+    public void testSetHand_withHandOversized_throwsException() {
+    	Dealer dealer = new Dealer();
+
+        List<Card> hand = Arrays.asList(
+            new Card(Card.Suit.HEARTS, Card.Rank.A),
+            new Card(Card.Suit.DIAMONDS, Card.Rank.K),
+            new Card(Card.Suit.CLUBS, Card.Rank.SEVEN)
+        );
+       
+        assertThrows(IllegalArgumentException.class, () -> dealer.setHand(hand));
+    }
+    
+    @Test
     public void testSetHand_nullOrEmptyValue_throwsException() {
     	Dealer dealer = new Dealer();
     	List<Card> hand = new ArrayList<>();
         assertThrows(IllegalArgumentException.class, () -> dealer.setHand(null));
         assertThrows(IllegalArgumentException.class, () -> dealer.setHand(hand));
-        
     }
     
     @Test

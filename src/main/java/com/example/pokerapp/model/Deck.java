@@ -11,6 +11,9 @@ public class Deck {
     public Deck() {
     		this.cards = new ArrayList<>();
     		initializeDeck();
+    		if (this.cards.size() > 52) {
+                throw new IllegalArgumentException("Too many cards in the deck.");
+            }
     }
     
     private void initializeDeck() {

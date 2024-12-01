@@ -1,8 +1,0 @@
-com\example\pokerapp\view\MainViewTest.class
-com\example\pokerapp\model\DeckTest.class
-com\example\pokerapp\model\PlayerTest.class
-com\example\pokerapp\model\DealerTest.class
-com\example\pokerapp\model\GameTest.class
-com\example\pokerapp\controller\MainControllerTest.class
-com\example\pokerapp\model\TableTest.class
-com\example\pokerapp\model\CardTest.class

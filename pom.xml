@@ -107,6 +107,24 @@
                 </configuration>
             </plugin>
             <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-checkstyle-plugin</artifactId>
+		    <version>3.6.0</version>
+		    <configuration>
+		        <configLocation>checkstyle.xml</configLocation> <!-- Ruta a tu archivo checkstyle.xml -->
+		        <encoding>UTF-8</encoding> <!-- Configuración correcta de encoding -->
+		        <consoleOutput>true</consoleOutput>
+		        <failsOnError>true</failsOnError>
+		    </configuration>
+		    <executions>
+		        <execution>
+		            <phase>validate</phase>
+		            <goals>
+		                <goal>check</goal>
+		            </goals>
+		        </execution>
+		    </executions>
+		</plugin>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-maven-plugin</artifactId>
             <version>0.0.8</version> <!-- Use the appropriate version -->

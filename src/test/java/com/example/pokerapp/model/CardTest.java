@@ -10,17 +10,44 @@ public class CardTest {
 	@Test
     void constructor_ShouldCreateCard_WhenSuitAndRankAreValid() {
         Card.Suit suit = Card.Suit.HEARTS;
-        Card.Rank rank = Card.Rank.A;
+        Card.Rank rank = Card.Rank.TWO;
         Card card = new Card(suit, rank);
         assertEquals(suit, card.getSuit());
         assertEquals(rank, card.getRank());
+        
+        Card.Suit suit2 = Card.Suit.SPADES;
+        Card.Rank rank2 = Card.Rank.A;
+        Card card2 = new Card(suit2, rank2);
+        assertEquals(suit2, card2.getSuit());
+        assertEquals(rank2, card2.getRank());
     }
     
+	@Test
+	void constructor_ShouldCreateCard_WithValidSuitsAndRanks() {
+	    for (Card.Suit suit : Card.Suit.values()) {
+	        for (Card.Rank rank : Card.Rank.values()) {
+	        	if ((suit == Card.Suit.HEARTS && rank == Card.Rank.A) || 
+                    (suit == Card.Suit.SPADES && rank == Card.Rank.TWO)) {
+                    continue;
+                }
+	            Card card = new Card(suit, rank);
+	            assertEquals(suit, card.getSuit());
+	            assertEquals(rank, card.getRank());
+	        }
+	    }
+	}
+	
     @Test
     public void testConstructor_nullValues_throwsException() {
         assertThrows(IllegalArgumentException.class, () -> new Card(null, Card.Rank.A));
         assertThrows(IllegalArgumentException.class, () -> new Card(Card.Suit.HEARTS, null));
         assertThrows(IllegalArgumentException.class, () -> new Card(null, null));
+    }
+    
+    @Test
+    void constructor_ShouldThrowException_WhenInvalidSuitOrRank() {
+       assertThrows(IllegalArgumentException.class, () -> new Card(Card.Suit.valueOf("INVALID"), Card.Rank.A));
+       assertThrows(IllegalArgumentException.class, () -> new Card(Card.Suit.HEARTS, Card.Rank.valueOf("INVALID")));
     }
     
     @ParameterizedTest

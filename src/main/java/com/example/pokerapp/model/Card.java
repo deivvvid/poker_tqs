@@ -9,8 +9,16 @@ public class Card {
     private final Rank rank;
     
     public Card(Suit suit, Rank rank) {
-        if (suit == null || rank == null) {
-            throw new IllegalArgumentException("Suit and rank cannot be null.");
+    	try {
+            if (suit == null || rank == null) {
+                throw new IllegalArgumentException("Suit and rank cannot be null.");
+            }
+
+            Card.Suit.valueOf(suit.name());
+            Card.Rank.valueOf(rank.name());
+
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid Suit or Rank", e);
         }
         this.suit = suit;
         this.rank = rank;

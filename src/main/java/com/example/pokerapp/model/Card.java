@@ -29,6 +29,10 @@ public class Card {
         Card card = (Card) obj;
         return suit == card.suit && rank == card.rank;
     }
+    
+    public String getImagePath() {
+    	return rank + "_" + suit + ".png";
+    }
 
     @Override
     public String toString() {

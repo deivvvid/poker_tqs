@@ -1,0 +1,7 @@
+com\example\pokerapp\model\Card$Suit.class
+com\example\pokerapp\model\Player.class
+com\example\pokerapp\view\MainView$1.class
+com\example\pokerapp\model\Card.class
+com\example\pokerapp\model\Deck.class
+com\example\pokerapp\view\MainView.class
+com\example\pokerapp\model\Card$Rank.class

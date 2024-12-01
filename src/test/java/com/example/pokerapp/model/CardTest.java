@@ -83,6 +83,12 @@ public class CardTest {
     }
     
     @Test
+    public void testGetImagePath() {
+        Card card = new Card(Card.Suit.SPADES, Card.Rank.J);
+        assertEquals("J_SPADES.png", card.getImagePath());
+    }
+    
+    @Test
     public void testToString() {
         Card card = new Card(Card.Suit.SPADES, Card.Rank.J);
         assertEquals("J of SPADES", card.toString());

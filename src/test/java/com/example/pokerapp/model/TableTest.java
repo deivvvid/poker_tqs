@@ -6,6 +6,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
+	
+	@Test
+    void testTableConstructor() {
+        Table table = new Table();
+
+        assertNotNull(table.getCommunityCards(), "CommunityCards can't be null.");
+        assertTrue(table.getCommunityCards().isEmpty(), "CommunityCards has to be empty.");
+
+        assertEquals(0, table.getAnteBet(), "AnteBet has to be 0.");
+
+        assertEquals(0, table.getCallBet(), "callBet has to be 0.");
+    }
 
     @Test
     void testAddCommunityCard() {

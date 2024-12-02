@@ -3,8 +3,9 @@ package com.example.pokerapp.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-public class Deck {
+public class Deck implements IDeck {
 	
 	// Lista que contiene las cartas del mazo
 	private final List<Card> cards;
@@ -13,9 +14,6 @@ public class Deck {
     public Deck() {
     		this.cards = new ArrayList<>();
     		initializeDeck();
-    		if (this.cards.size() > 52) {
-                throw new IllegalArgumentException("Too many cards in the deck.");
-            }
     }
     
     // Inicializa el mazo con todas las cartas posibles (por cada palo y rango)
@@ -28,11 +26,11 @@ public class Deck {
         }
     }
     
-    // Mezcla las cartas del mazo de forma aleatoria
+    //Mezcla las cartas del mazo de forma aleatoria
     public void shuffle() {
         Collections.shuffle(cards);
     }
-
+    
     // Reparte una carta, eliminándola del mazo
     public Card dealCard() {
         return cards.remove(0);

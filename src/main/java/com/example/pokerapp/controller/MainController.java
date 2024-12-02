@@ -23,7 +23,7 @@ public class MainController {
 	public MainController(IMainView mv) {
 		mainView = mv;  // Asocia la vista
         mainView.setMainController(this);  // Establece el controlador en la vista
-        game = new Game(startPlayerCoins);  // Crea el juego con el saldo inicial
+        game = new Game(startPlayerCoins, new Deck(), new Table());  // Crea el juego con el saldo inicial
         mainView.createViewElements();  // Inicializa los elementos de la vista
         updateViewPlayerCoins();  // Actualiza la cantidad de fichas del jugador en la vista
         stage = 0;  // Establece la etapa inicial

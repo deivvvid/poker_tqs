@@ -84,7 +84,6 @@ public class Player {
             throw new IllegalArgumentException("Cannot add a negative amount of coins.");
         }
         this.coins += amount;
-        
         if (amount > this.coins) {
             throw new IllegalArgumentException("Coins added incorrrectly.");
         }

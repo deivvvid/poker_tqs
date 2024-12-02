@@ -207,31 +207,31 @@ public class MainView implements IMainView {
     }
 
     // Método para rellenar el contenedor de las cartas del dealer
-    public int populateDealerCardsBox(List<Image> images) {
+    public int populateDealerCardsBox(List<String> strings) {
         dealerCardsBox.getChildren().clear();
-        for (Image i : images) {
-            dealerCardsBox.getChildren().add(createImageView(i, false, false, 0));
+        for (String s : strings) {
+            dealerCardsBox.getChildren().add(createImageView(new Image(s), false, false, 0));
         }
         return dealerCardsBox.getChildren().size();
     }
 
     // Método para rellenar el contenedor de las cartas de la mesa
-    public int populateTableCardsBox(List<Image> images) {
+    public int populateTableCardsBox(List<String> strings) {
         tableCardsBox.getChildren().clear();
         int j = 0;
-        for (Image i : images) {
-            tableCardsBox.getChildren().add(createImageView(i, true, true, j));
+        for (String s : strings) {
+            tableCardsBox.getChildren().add(createImageView(new Image(s), true, true, j));
             j++;
         }
         return tableCardsBox.getChildren().size();
     }
 
     // Método para rellenar el contenedor de las cartas del player
-    public int populatePlayerCardsBox(List<Image> images) {
+    public int populatePlayerCardsBox(List<String> strings) {
         playerCardsBox.getChildren().clear();
         int j = 0;
-        for (Image i : images) {
-            playerCardsBox.getChildren().add(createImageView(i, true, false, j));
+        for (String s : strings) {
+            playerCardsBox.getChildren().add(createImageView(new Image(s), true, false, j));
             j++;
         }
         return playerCardsBox.getChildren().size();

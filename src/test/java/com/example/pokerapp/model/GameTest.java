@@ -392,4 +392,59 @@ public class GameTest {
             new Card(Card.Suit.HEARTS, Card.Rank.A)
         )), "The best hand should be a Royal Flush.");
     }
+    
+    @Test
+    void testRoyalFlushMultiplier() {
+        assertEquals(100, Game.payRatio(Game.HandRank.ROYAL_FLUSH));
+    }
+
+    @Test
+    void testStraightFlushMultiplier() {
+        assertEquals(20, Game.payRatio(Game.HandRank.STRAIGHT_FLUSH));
+    }
+
+    @Test
+    void testFourOfAKindMultiplier() {
+        assertEquals(10, Game.payRatio(Game.HandRank.FOUR_OF_A_KIND));
+    }
+
+    @Test
+    void testFullHouseMultiplier() {
+        assertEquals(3, Game.payRatio(Game.HandRank.FULL_HOUSE));
+    }
+
+    @Test
+    void testFlushMultiplier() {
+        assertEquals(2, Game.payRatio(Game.HandRank.FLUSH));
+    }
+
+    @Test
+    void testStraightMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.STRAIGHT));
+    }
+
+    @Test
+    void testThreeOfAKindMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.THREE_OF_A_KIND));
+    }
+
+    @Test
+    void testTwoPairMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.TWO_PAIR));
+    }
+
+    @Test
+    void testOnePairMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.ONE_PAIR));
+    }
+
+    @Test
+    void testHighCardMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.HIGH_CARD));
+    }
+
+    @Test
+    void testDefaultMultiplier() {
+        assertEquals(1, Game.payRatio(null)); // Caso por defecto
+    }
 }

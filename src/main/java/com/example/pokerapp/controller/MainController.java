@@ -140,10 +140,10 @@ public class MainController {
         }
         
         // Actualiza las cartas del dealer en la vista
-        List<Image> g = new ArrayList<Image>();
+        List<String> g = new ArrayList<String>();
         for (Card c : game.getDealer().getHand()) {
         	// Carga las imágenes de las cartas
-            g.add(new Image(getClass().getResource("/" + c.getImagePath()).toString()));  
+            g.add(getClass().getResource("/" + c.getImagePath()).toString());  
         }
         mainView.populateDealerCardsBox(g);  // Actualiza la caja de cartas del dealer
     }
@@ -188,26 +188,26 @@ public class MainController {
         int sizeList = 0;
         
         // Muestra las cartas del dealer
-        List<Image> a = new ArrayList<Image>();
+        List<String> a = new ArrayList<String>();
         for (Card c : game.getDealer().getHand()) {
         	// Muestra las cartas del dealer ocultas, es decir, al revés
-            a.add(new Image(getClass().getResource("/reverse.png").toString()));  
+            a.add(getClass().getResource("/reverse.png").toString());  
         }
         sizeList += mainView.populateDealerCardsBox(a);  // Actualiza la caja de cartas del dealer
         
         // Muestra las cartas de la mesa
-        List<Image> b = new ArrayList<Image>();
+        List<String> b = new ArrayList<String>();
         for (Card c : game.getTable().getCommunityCards()) {
         	// Muestra las cartas de la mesa
-            b.add(new Image(getClass().getResource("/" + c.getImagePath()).toString()));  
+            b.add(getClass().getResource("/" + c.getImagePath()).toString());  
         }
         sizeList += mainView.populateTableCardsBox(b);  // Actualiza la caja de cartas de la mesa
         
         // Muestra las cartas del jugador
-        List<Image> d = new ArrayList<Image>();
+        List<String> d = new ArrayList<String>();
         for (Card c : game.getPlayer().getHand()) {
         	// Muestra las cartas del jugador
-            d.add(new Image(getClass().getResource("/" + c.getImagePath()).toString()));  
+            d.add(getClass().getResource("/" + c.getImagePath()).toString());  
         }
         sizeList += mainView.populatePlayerCardsBox(d);  // Actualiza la caja de cartas del jugador
         

@@ -15,9 +15,9 @@ public interface IMainView {
     public void setPlacedCoins(String s);
     public String getPlacedCoins();
     public void createViewElements();
-    public int populateDealerCardsBox(List<Image> images);
-    public int populateTableCardsBox(List<Image> images);
-    public int populatePlayerCardsBox(List<Image> images);
+    public int populateDealerCardsBox(List<String> string);
+    public int populateTableCardsBox(List<String> string);
+    public int populatePlayerCardsBox(List<String> string);
     public void setAnteBet(String s);
     public String getAnteBet();
     public void setCallBet(String s);

@@ -12,9 +12,9 @@ public class MockView implements IMainView {
 	private String playerCoins;
 	private String placedCoins;
 	private MainController mc;
-	private List<Image> top;
-	private List<Image> mid;
-	private List<Image> bot;
+	private List<String> top;
+	private List<String> mid;
+	private List<String> bot;
 	private String anteBet;
 	private String callBet;
 	
@@ -27,9 +27,9 @@ public class MockView implements IMainView {
 		placedCoins = "PLACED COINS: 0";
 		anteBet = "ANTE: No bet";
 		anteBet = "CALL: No bet";
-		top = new ArrayList<Image>();
-		mid = new ArrayList<Image>();
-		bot = new ArrayList<Image>();
+		top = new ArrayList<String>();
+		mid = new ArrayList<String>();
+		bot = new ArrayList<String>();
 	}
 	
 	public void setPlayerCoins(String s) {
@@ -52,26 +52,26 @@ public class MockView implements IMainView {
     	this.mc = mc;
     }
     
-    public int populateDealerCardsBox(List<Image> images) {
+    public int populateDealerCardsBox(List<String> strings) {
         top.clear();
-        for (Image i : images) {
-            top.add(i);
+        for (String s : strings) {
+            top.add(s);
         }
         return top.size();
     }
 
-    public int populateTableCardsBox(List<Image> images) {
+    public int populateTableCardsBox(List<String> strings) {
         mid.clear();
-        for (Image i : images) {
-            mid.add(i);
+        for (String s : strings) {
+            mid.add(s);
         }
         return mid.size();
     }
 
-    public int populatePlayerCardsBox(List<Image> images) {
+    public int populatePlayerCardsBox(List<String> strings) {
         bot.clear();
-        for (Image i : images) {
-            bot.add(i);
+        for (String s : strings) {
+            bot.add(s);
         }
         return bot.size();
     }

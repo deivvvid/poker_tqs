@@ -31,7 +31,7 @@ jobs:
       run: sudo apt-get install -y xvfb
 
     - name: Start Xvfb
-      run: Xvfb :99 -screen 0 1024x768x24 &
+      run: Xvfb :92 -screen 0 1024x768x24 &
 
     - name: Build with Maven
       run: mvn clean install -B
@@ -39,4 +39,4 @@ jobs:
     - name: Run tests
       run: mvn test
       env:
-        DISPLAY: :99  # Especifica que las pruebas JavaFX deben usar el servidor Xvfb
+        DISPLAY: :92  # Especifica que las pruebas JavaFX deben usar el servidor Xvfb

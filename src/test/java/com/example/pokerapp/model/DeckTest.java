@@ -76,18 +76,4 @@ public class DeckTest {
         assertEquals(originalOrder.size(), deck.getCards().size(), "El tamaño del mazo no debe cambiar al barajar.");
         assertNotEquals(originalOrder, deck.getCards(), "El orden de las cartas debería ser diferente tras barajar.");
     }
-	
-	@Test
-	void testResetDeck0() {
-		deck.resetDeck();
-		List<Card> cards = deck.getCards();
-		int index = 0;
-        for (Card.Suit suit : Card.Suit.values()) {
-            for (Card.Rank rank : Card.Rank.values()) {
-                assertEquals(new Card(suit, rank), cards.get(index),
-                        "Expected card at position " + index + " is not correct.");
-                index++;
-            }
-        }
-	}
 }

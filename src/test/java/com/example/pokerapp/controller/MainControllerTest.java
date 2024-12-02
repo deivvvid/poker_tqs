@@ -11,9 +11,13 @@ import javafx.application.Platform;
 public class MainControllerTest {
 	
 	@BeforeAll
-    static void initJavaFX() {
-        Platform.startup(() -> {});
-    }
+	static void initJavaFX() {
+	    if (Platform.isFxApplicationThread()) {
+	        Platform.startup(() -> {}); // Start JavaFX on the FX thread
+	    } else {
+	        Platform.runLater(() -> Platform.startup(() -> {}));
+	    }
+	}
 
 	@Test
 	public void constructorTest() {

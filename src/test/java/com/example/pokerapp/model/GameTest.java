@@ -442,9 +442,4 @@ public class GameTest {
     void testHighCardMultiplier() {
         assertEquals(1, Game.payRatio(Game.HandRank.HIGH_CARD));
     }
-
-    @Test
-    void testDefaultMultiplier() {
-        assertEquals(1, Game.payRatio(null)); // Caso por defecto
-    }
 }

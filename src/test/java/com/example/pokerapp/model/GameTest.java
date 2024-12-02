@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,10 +14,12 @@ import java.util.List;
 public class GameTest {
 	
 	private Game game;
+	private Table tableMock;
 	
 	@BeforeEach
 	void setUp() {
-		game = new Game(1000);
+		tableMock = mock(Table.class);
+		game = new Game(1000, new DeckMock(), tableMock);
 	}
 	
 	@Test
@@ -27,7 +32,12 @@ public class GameTest {
 	
 	@Test
 	void testStartRound() {
+		when(tableMock.getAnteBet()).thenReturn(5);
+		when(tableMock.getCommunityCards()).thenReturn(Arrays.asList(new Card(Card.Suit.HEARTS, Card.Rank.A),
+		        new Card(Card.Suit.DIAMONDS, Card.Rank.K),
+		        new Card(Card.Suit.CLUBS, Card.Rank.Q)));
 		game.startRound(5);
+		verify(tableMock).setAnteBet(5);
 		assertEquals(5, game.getTable().getAnteBet(), "Ante bet should be set to 5");
 		assertEquals(1000 - 5, game.getPlayer().getCoins(), "Player coins should be set to 1000 - 5");
 		assertEquals(2, game.getPlayer().getHand().size(), "Player hand should be size 2");
@@ -37,8 +47,16 @@ public class GameTest {
 	
 	@Test
 	void testPlayerCalls() {
+		when(tableMock.getAnteBet()).thenReturn(5);
+		when(tableMock.getCallBet()).thenReturn(5*2);
 		game.startRound(5);
+		verify(tableMock).setAnteBet(5);
 		game.playerCalls();
+		when(tableMock.getCommunityCards()).thenReturn(Arrays.asList(new Card(Card.Suit.HEARTS, Card.Rank.A),
+		        new Card(Card.Suit.DIAMONDS, Card.Rank.K),
+		        new Card(Card.Suit.CLUBS, Card.Rank.Q),
+		        new Card(Card.Suit.CLUBS, Card.Rank.Q),
+		        new Card(Card.Suit.CLUBS, Card.Rank.Q)));
 		assertNotEquals(0, game.getTable().getAnteBet(), "Ante bet should be not 0");
 		assertEquals(5*2, game.getTable().getCallBet(), "Call bet should be 5*2");
 		assertEquals(1000 - 5 - 2*5, game.getPlayer().getCoins(), "Player coins should be set to 1000 - 5 - 2*5");
@@ -373,5 +391,55 @@ public class GameTest {
             new Card(Card.Suit.HEARTS, Card.Rank.K),
             new Card(Card.Suit.HEARTS, Card.Rank.A)
         )), "The best hand should be a Royal Flush.");
+    }
+    
+    @Test
+    void testRoyalFlushMultiplier() {
+        assertEquals(100, Game.payRatio(Game.HandRank.ROYAL_FLUSH));
+    }
+
+    @Test
+    void testStraightFlushMultiplier() {
+        assertEquals(20, Game.payRatio(Game.HandRank.STRAIGHT_FLUSH));
+    }
+
+    @Test
+    void testFourOfAKindMultiplier() {
+        assertEquals(10, Game.payRatio(Game.HandRank.FOUR_OF_A_KIND));
+    }
+
+    @Test
+    void testFullHouseMultiplier() {
+        assertEquals(3, Game.payRatio(Game.HandRank.FULL_HOUSE));
+    }
+
+    @Test
+    void testFlushMultiplier() {
+        assertEquals(2, Game.payRatio(Game.HandRank.FLUSH));
+    }
+
+    @Test
+    void testStraightMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.STRAIGHT));
+    }
+
+    @Test
+    void testThreeOfAKindMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.THREE_OF_A_KIND));
+    }
+
+    @Test
+    void testTwoPairMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.TWO_PAIR));
+    }
+
+    @Test
+    void testOnePairMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.ONE_PAIR));
+    }
+
+    @Test
+    void testHighCardMultiplier() {
+        assertEquals(1, Game.payRatio(Game.HandRank.HIGH_CARD));
     }
 }

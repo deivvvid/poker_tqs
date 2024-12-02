@@ -21,17 +21,17 @@ public class Game {
 	    HIGH_CARD          // Carta alta
 	}
 	
-	private Deck deck;       // El mazo de cartas
+	private IDeck deck;       // El mazo de cartas
 	private Dealer dealer;   // El dealer (repartidor)
 	private Player player;   // El jugador
 	private Table table;     // La mesa del juego
 
 	// Constructor que inicializa el mazo, dealer, jugador y la mesa. Baraja las cartas.
-    public Game(int playerChips) {
-        this.deck = new Deck();
+    public Game(int playerChips, IDeck d, Table t) {
+        this.deck = d;
         this.dealer = new Dealer();
         this.player = new Player("Player1", new ArrayList<Card>(), playerChips);
-        this.table = new Table();
+        this.table = t;
         deck.shuffle();
     }
 
@@ -212,8 +212,8 @@ public class Game {
     	}
     }
     
-    // Métodos getter para acceder a las propiedades del mazo, dealer, jugador y mesa.
-    public Deck getDeck() {
+ // Métodos getter para acceder a las propiedades del mazo, dealer, jugador y mesa.
+    public IDeck getDeck() {
         return deck;
     }
 

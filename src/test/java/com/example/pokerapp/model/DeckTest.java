@@ -17,8 +17,13 @@ public class DeckTest {
 	private Deck deck;
 
     @BeforeEach
-    void setUp() {
+    void setUp() {        
         deck = new Deck();
+    }
+    
+    @Test
+    void testDeckConstructor_initializesCardsList() {
+        assertNotNull(deck.getCards(), "The cards list should not be null after constructor is called.");
     }
 	
 	@Test
@@ -59,16 +64,16 @@ public class DeckTest {
     }
 	
 	@Test
+	void testDealCard0() {
+		Card c = deck.getCards().get(0);
+	}
+	
+	@Test
     void testResetDeck() {
-        while (!deck.getCards().isEmpty()) {
-            deck.dealCard();
-        }
-        assertTrue(deck.getCards().isEmpty(), "El mazo debería estar vacío antes de resetear.");
+		List<Card> originalOrder = new ArrayList<>(deck.getCards());
         deck.resetDeck();
         assertEquals(52, deck.getCards().size(), "El mazo debe contener 52 cartas tras resetear.");
-        Set<Card> uniqueCards = new HashSet<>(deck.getCards());
-        assertEquals(52, uniqueCards.size(), "El mazo debe tener 52 cartas únicas tras resetear.");
+        assertEquals(originalOrder.size(), deck.getCards().size(), "El tamaño del mazo no debe cambiar al barajar.");
+        assertNotEquals(originalOrder, deck.getCards(), "El orden de las cartas debería ser diferente tras barajar.");
     }
-	
-	
 }

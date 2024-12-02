@@ -21,11 +21,7 @@ public class Table {
 
     // Añade una carta a la lista de cartas comunitarias
     public void addCommunityCard(Card card) {
-    	int quantity_communty_cards_before = communityCards.size();
         communityCards.add(card);
-        if (quantity_communty_cards_before >= communityCards.size()) {
-        	throw new IllegalArgumentException("Card added incorrrectly.");
-        }
     }
 
     // Obtiene las cartas comunitarias

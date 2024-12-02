@@ -53,7 +53,7 @@ public class PlayerTest {
     public void testConstructor_nullHand_throwsException() {
         assertThrows(IllegalArgumentException.class, () -> new Player("John", null, 100));
     }
-
+   
     @Test
     public void testSetCoins_validValue_setsCoins() {
         Player player = new Player();

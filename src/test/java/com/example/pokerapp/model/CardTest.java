@@ -7,6 +7,83 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 public class CardTest {
 
+    @Test
+    void testCardConstructor_NullSuit() {
+        // Caso inválido: Crear una carta con palo nulo
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Card(null, Card.Rank.A);
+        }, "Should throw NullPointerException when suit is null.");
+    }
+
+    @Test
+    void testCardConstructor_NullRank() {
+        // Caso inválido: Crear una carta con rango nulo
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Card(Card.Suit.HEARTS, null);
+        }, "Should throw NullPointerException when rank is null.");
+    }
+	
+    @Test
+    public void testEquals() {
+        // Crear dos cartas con el mismo valor
+        Card card1 = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        Card card2 = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        
+        // Verificar que las dos cartas son iguales
+        assertTrue(card1.equals(card2), "Cards with same suit and rank should be equal");
+        
+        // Crear una carta diferente
+        Card card3 = new Card(Card.Suit.CLUBS, Card.Rank.A);
+        
+        // Verificar que las cartas son diferentes
+        assertFalse(card1.equals(card3), "Cards with different suit should not be equal");
+        
+        // Crear una carta con un rank diferente
+        Card card4 = new Card(Card.Suit.HEARTS, Card.Rank.K);
+        
+        // Verificar que las cartas son diferentes
+        assertFalse(card1.equals(card4), "Cards with different rank should not be equal");
+    }
+    
+    @Test
+    public void testEquals2() {
+        // Crear dos cartas con el mismo valor (mismo suit y rank)
+        Card card1 = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        Card card2 = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        
+        // Verificar que las dos cartas son iguales
+        assertTrue(card1.equals(card2), "Cards with the same suit and rank should be equal");
+        
+        // Crear una carta diferente en suit
+        Card card3 = new Card(Card.Suit.CLUBS, Card.Rank.A);
+        
+        // Verificar que las cartas son diferentes por el suit
+        assertFalse(card1.equals(card3), "Cards with different suits should not be equal");
+        
+        // Crear una carta diferente en rank
+        Card card4 = new Card(Card.Suit.HEARTS, Card.Rank.K);
+        
+        // Verificar que las cartas son diferentes por el rank
+        assertFalse(card1.equals(card4), "Cards with different ranks should not be equal");
+        
+        // Verificar que la misma carta es igual a sí misma
+        assertTrue(card1.equals(card1), "A card should be equal to itself");
+        
+        // Verificar que una carta no es igual a null
+        assertFalse(card1.equals(null), "Card should not be equal to null");
+        
+        // Verificar que no son iguales a un objeto de otro tipo
+        assertFalse(card1.equals(new Object()), "Card should not be equal to objects of other types");
+    }
+    
+	@Test
+    void testCardConstructor_ValidSuitAndRank() {
+        Card card = new Card(Card.Suit.HEARTS, Card.Rank.A);
+        assertNotNull(card, "Card should be created with valid suit and rank.");
+        assertEquals(Card.Suit.HEARTS, card.getSuit(), "Suit should be HEARTS.");
+        assertEquals(Card.Rank.A, card.getRank(), "Rank should be ACE.");
+    }
+
 	@Test
     void constructor_ShouldCreateCard_WhenSuitAndRankAreValid() {
         Card.Suit suit = Card.Suit.HEARTS;
